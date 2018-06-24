@@ -1,3 +1,9 @@
+/*
+by Muhammad Magdy
+mail/mosmagdysror@live.com
+phone/+2-01125424928
+date/24-6-2018
+*/
 #include<iostream>                                 //input output lib
 #include<string>                                  //lib to handle strings
 #include<sstream>                                //lib to convert float to string
