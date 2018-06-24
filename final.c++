@@ -1,9 +1,3 @@
-/*
-by Muhammad Magdy
-mail/mosmagdysror@live.com
-phone/+2-01125424928
-date/24-6-2018
-*/
 #include<iostream>                                 //input output lib
 #include<string>                                  //lib to handle strings
 #include<sstream>                                //lib to convert float to string
@@ -14,16 +8,19 @@ int n;                                      //num of equations
 string array [100];                        //array of strings (equations)
 int num_of_variables[100];                //array to hold num of variables in all equations
 float  coefficients_array[100][100];     //array to hold all coefficients
+float  constants_array[100];            //array to hold all constants
 
 
-int num_vars_func();                  //function to calculate number of variables
-void num_vars_func_output();         //function to print number of variables
+int num_vars_func();                 //function to calculate number of variables
+void num_vars_func_output();        //function to print number of variables
 
-void proper_form_func();           //function to put equations in proper form and convert it to array of float numbers
+void proper_form_func();          //function to put equations in proper form and convert it to array of float numbers
+void proper_form_func_output();  //function to print D
 
+void column_print(int column_num); //function to print a specific column
 
-int main(){                     //main function of code
-    cin>>n;                    //enter the number of equations
+int main(){                      //main function of code
+    cin>>n;                     //enter the number of equations
 
 
     //loop to put equations to array of strings
@@ -43,14 +40,25 @@ int main(){                     //main function of code
 
 
         //enter the command of the wanted operation
-        cin >> command;
+        //cin >> command;
+        getline( cin, command);
 
         //string1.compare(string2) boolen function to compare two strings
         //if the input of the wanted operation so call its function
 
         //commands
         if           (command.compare(num_vars) == 0){num_vars_func_output();}
-        else if      (command.compare(D) == 0){proper_form_func();}
+        else if      (command.compare(D) == 0){proper_form_func_output();}
+        else if      (command.find("column") == 0){
+            proper_form_func();
+            string sub;
+            size_t x;
+            int number;
+            x = command.find("x");
+            sub = command.substr(x+1);
+            number = atof(sub.c_str());
+            column_print(number);
+        }
 
 
 
@@ -103,9 +111,13 @@ return max_num_of_variables; //return its value
 }
 
 
+/***************************************************************************/
+
+
+
  //function to print number of variables
 void num_vars_func_output(){
-cout << num_vars_func() <<"\n"; //print the max num of var
+cout << num_vars_func() <<"\n" <<"\n"; //print the max num of var
 }
 
 
@@ -183,12 +195,42 @@ for (int i = 0;i<n;i++)  {
 
         }
 
+    //to extract constants and convert it to float then put it in constants_array
+    size_t pos = equation_n.find("=");
+    string sub;
+    sub = equation_n.substr(pos+1);
+    constants_array[i] = atof(sub.c_str());
 }
+}
+
+
+/***************************************************************************/
+
+
+
+void proper_form_func_output(){
+proper_form_func();
+int max_num_of_var;
+max_num_of_var = num_vars_func();  //call the prev function to have max num of var of all equations
+
 for (int i = 0;i<n;i++){
     for(int j=0;j<max_num_of_var;j++){
         cout<<coefficients_array[i][j] <<"    ";
 
     }
+    //cout<<"      "<<constants_array[i];  //to print constants_array with coefficients_array
+    cout<<"\n";
+}
 cout<<"\n";
 }
+
+
+/***************************************************************************/
+
+
+void column_print(int column_num){
+for (int i = 0;i < n;i++){
+cout<<coefficients_array[i][column_num-1] <<"\n";
+}
+cout<<"\n";
 }
