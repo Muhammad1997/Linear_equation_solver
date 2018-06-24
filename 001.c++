@@ -1,3 +1,10 @@
+/*
+by Muhammad Magdy
+mail/mosmagdysror@live.com
+phone/+2-01125424928
+date/23-6-2018
+*/
+
 #include<iostream>
 #include<string>
 using namespace std;
